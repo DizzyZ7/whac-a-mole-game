@@ -7,7 +7,6 @@ let score = 0;
 let timeLeft = 30; // Длительность игры в секундах
 let lastHole;
 let timeUp = false;
-let timerId = null;
 let countdownTimerId = null;
 
 // Функция для генерации случайного времени появления крота
@@ -20,7 +19,7 @@ function randomHole(holes) {
     const index = Math.floor(Math.random() * holes.length);
     const hole = holes[index];
     if (hole === lastHole) {
-        return randomHole(holes); // Избегаем повторения норки подряд
+        return randomHole(holes); 
     }
     lastHole = hole;
     return hole;
@@ -54,15 +53,22 @@ function countdown() {
 
 // Функция для обработки клика по кроту
 function whack(event) {
-    if (!timeUp && event.target.classList.contains('mole')) {
+    // Проверяем, что клик был именно по изображению крота (или его контейнеру)
+    if (!timeUp && (event.target.classList.contains('mole-img') || event.target.classList.contains('mole'))) {
         score++;
-        // Мгновенно прячем крота после удара
-        event.target.parentNode.classList.remove('up'); 
+        // Мгновенно прячем крота после удара и добавляем класс удара
+        const hole = event.target.closest('.hole');
+        hole.classList.remove('up'); 
+        hole.classList.add('hit'); // Добавляем класс 'hit'
+        
+        // Убираем класс 'hit' через короткое время
+        setTimeout(() => hole.classList.remove('hit'), 100);
+
         scoreDisplay.textContent = score;
     }
 }
 
-// Добавляем обработчики кликов на все норки
+// Добавляем обработчики кликов на все норки/кротов
 holes.forEach(hole => hole.addEventListener('click', whack));
 
 // Функция старта игры
