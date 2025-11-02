@@ -17,6 +17,7 @@ body {
     display: flex;
     justify-content: space-around;
     margin-bottom: 20px;
+    font-size: 1.2em;
 }
 
 #start-button {
@@ -24,12 +25,24 @@ body {
     font-size: 16px;
     cursor: pointer;
     margin-bottom: 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+#start-button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
 }
 
 .game-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 10px;
+    padding: 10px;
+    background-color: #D2B48C; /* Светлая земля */
+    border-radius: 10px;
 }
 
 .hole {
@@ -39,15 +52,24 @@ body {
     overflow: hidden;
     position: relative;
     cursor: pointer;
+    box-shadow: inset 0 -10px 10px rgba(0, 0, 0, 0.5);
 }
 
 .mole {
-    background-color: #A0522D; /* Цвет крота */
     width: 100%;
     height: 100%;
     position: absolute;
     bottom: -100%; /* Крот спрятан */
     transition: bottom 0.3s ease-out;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end; /* Изображение будет прижиматься ко дну норки */
+}
+
+.mole-img {
+    width: 90%; /* Изображение немного меньше норки */
+    height: auto;
+    /* Убираем стандартный фон */
 }
 
 .hole.up .mole {
